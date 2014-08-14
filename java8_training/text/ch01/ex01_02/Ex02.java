@@ -23,7 +23,7 @@ public class Ex02 {
   public static void getSubDirectoriesLambda(LinkedList<File> list, String directoryPath) {
     System.out.println(directoryPath);
     File file = new File(directoryPath);
-    FileFilter directoryFilter = (pathname) -> {return pathname.isDirectory();};
+    FileFilter directoryFilter = (path) -> {return path.isDirectory();};
     File[] files = file.listFiles(directoryFilter);
     for(File oneFile: files) {
       list.add(oneFile);

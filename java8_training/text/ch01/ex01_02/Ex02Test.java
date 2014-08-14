@@ -21,9 +21,7 @@ public class Ex02Test {
     list1.add(file2);
     list2.add(file1);
     list2.add(file2);
-    if (!Ex02.compareFileList(list1, list2)) {
-      fail("list1とlist2は同じ内容のはずです。");
-    }
+    assertTrue(Ex02.compareFileList(list1, list2));
   }
 
   @Test
@@ -41,24 +39,43 @@ public class Ex02Test {
     list2.add(file1);
     list2.add(file3);
 
-    if (Ex02.compareFileList(list1, list2)) {
-      fail("list1とlist2の内容は異なるはずです。");
+    assertFalse(Ex02.compareFileList(list1, list2));
+  }
+
+  @Test
+  public void testGetSubDirectoriesFileFilter() {
+    LinkedList<File> list = new LinkedList<File>();
+    Ex02.getSubDirectoriesFileFilter(list, System.getProperty("user.dir"));
+    boolean isEx01_02Found = false;
+    boolean isReadmeFound = false;
+    for(File oneFile: list) {
+      if (oneFile.toString().endsWith("ex01_02")) {
+        isEx01_02Found = true;
+      }
+      if (oneFile.toString().endsWith("README.md")) {
+        isReadmeFound = true;
+      }
     }
+    assertTrue(isEx01_02Found);
+    assertFalse(isReadmeFound);
   }
 
   @Test
-  public void testShowSubDirectoriesFileFilter() {
-    fail("まだ実装されていません");
+  public void testGetSubDirectoriesLambda() {
+    LinkedList<File> listFileFilter = new LinkedList<File>();
+    LinkedList<File> listLambda = new LinkedList<File>();
+    Ex02.getSubDirectoriesFileFilter(listFileFilter, System.getProperty("user.dir"));
+    Ex02.getSubDirectoriesLambda(listLambda, System.getProperty("user.dir"));
+    assertTrue(Ex02.compareFileList(listFileFilter, listLambda));
   }
 
   @Test
-  public void testShowSubDirectoriesLambda() {
-    fail("まだ実装されていません");
-  }
-
-  @Test
-  public void testShowSubDirectoriesMethodReference() {
-    fail("まだ実装されていません");
+  public void testGetSubDirectoriesMethodReference() {
+    LinkedList<File> listFileFilter = new LinkedList<File>();
+    LinkedList<File> listMethodReference = new LinkedList<File>();
+    Ex02.getSubDirectoriesFileFilter(listFileFilter, System.getProperty("user.dir"));
+    Ex02.getSubDirectoriesMethodReference(listMethodReference, System.getProperty("user.dir"));
+    assertTrue(Ex02.compareFileList(listFileFilter, listMethodReference));
   }
 
 

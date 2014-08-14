@@ -1,5 +1,3 @@
-// TODO: テストコードを書く。。
-
 package ch01.ex01_02;
 
 import java.io.File;
@@ -7,8 +5,8 @@ import java.io.FileFilter;
 import java.util.LinkedList;
 
 public class Ex02 {
-  public static void showSubDirectoriesFileFilter(LinkedList<File> list, String pathname) {
-    File file = new File(pathname);
+  public static void getSubDirectoriesFileFilter(LinkedList<File> list, String directoryPath) {
+    File file = new File(directoryPath);
     FileFilter directoryFilter = new FileFilter() {
       @Override
       public boolean accept(File pathname) {
@@ -18,28 +16,29 @@ public class Ex02 {
     File[] files = file.listFiles(directoryFilter);
     for(File oneFile: files) {
       list.add(oneFile);
-      showSubDirectoriesFileFilter(list, oneFile.toString());
+      getSubDirectoriesFileFilter(list, oneFile.toString());
     }
   }
 
-  public static void showSubDirectoriesLambda(LinkedList<File> list, String pathname) {
-    File file = new File(pathname);
-    FileFilter directoryFilter = (File dummy) -> {return file.isDirectory();};
+  public static void getSubDirectoriesLambda(LinkedList<File> list, String directoryPath) {
+    System.out.println(directoryPath);
+    File file = new File(directoryPath);
+    FileFilter directoryFilter = (pathname) -> {return pathname.isDirectory();};
     File[] files = file.listFiles(directoryFilter);
     for(File oneFile: files) {
       list.add(oneFile);
-      showSubDirectoriesFileFilter(list, oneFile.toString());
+      getSubDirectoriesLambda(list, oneFile.toString());
     }
   }
 
-  public static void showSubDirectoriesMethodReference(LinkedList<File> list, String pathname) {
-    File file = new File(pathname);
+  public static void getSubDirectoriesMethodReference(LinkedList<File> list, String directoryPath) {
+    File file = new File(directoryPath);
     FileFilter directoryFilter = File::isDirectory;
     directoryFilter.accept(file);
     File[] files = file.listFiles(directoryFilter);
     for(File oneFile: files) {
       list.add(oneFile);
-      showSubDirectoriesFileFilter(list, oneFile.toString());
+      getSubDirectoriesMethodReference(list, oneFile.toString());
     }
   }
 
@@ -59,19 +58,19 @@ public class Ex02 {
 
   public static void main(String[] args) {
     LinkedList<File> listFileFilter = new LinkedList<File>();
-    showSubDirectoriesFileFilter(listFileFilter, "D:\\10_development\\git\\java8_training");
+    getSubDirectoriesFileFilter(listFileFilter, "D:\\10_development\\git\\java8_training");
     for(File oneFile: listFileFilter) {
-      System.out.println(oneFile);
+      // System.out.println(oneFile);
     }
 
     LinkedList<File> listLambda = new LinkedList<File>();
-    showSubDirectoriesLambda(listLambda, "D:\\10_development\\git\\java8_training");
+    getSubDirectoriesLambda(listLambda, "D:\\10_development\\git\\java8_training");
     for(File oneFile: listLambda) {
       System.out.println(oneFile);
     }
 
     LinkedList<File> listMethodReference = new LinkedList<File>();
-    showSubDirectoriesMethodReference(listMethodReference, "D:\\10_development\\git\\java8_training");
+    getSubDirectoriesMethodReference(listMethodReference, "D:\\10_development\\git\\java8_training");
     for(File oneFile: listMethodReference) {
       System.out.println(oneFile);
     }
@@ -82,7 +81,7 @@ public class Ex02 {
       System.out.println("listFileFilter is NOT the same as the listLambda");
     }
 
-    if (compareFileList(listLambda, listMethodReference)) {
+    if (compareFileList(listFileFilter, listMethodReference)) {
       System.out.println("listLambda is the same as the listMethodReference");
     } else {
       System.out.println("listLambda is NOT the same as the listMethodReference");

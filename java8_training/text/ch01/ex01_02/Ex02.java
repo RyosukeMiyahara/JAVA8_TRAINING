@@ -60,7 +60,7 @@ public class Ex02 {
     LinkedList<File> listFileFilter = new LinkedList<File>();
     getSubDirectoriesFileFilter(listFileFilter, "D:\\10_development\\git\\java8_training");
     for(File oneFile: listFileFilter) {
-      // System.out.println(oneFile);
+      System.out.println(oneFile);
     }
 
     LinkedList<File> listLambda = new LinkedList<File>();

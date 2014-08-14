@@ -1,0 +1,3 @@
+# 練習問題1-7
+
+2つのRunnableインスタンスをパラメータとして受け取り、最初のRunnnableを実行した後に2つ目のRunnableを実行するRunnableを返すように、staticメソッドandThenを書きなさい。mainメソッドでは、andThenへの呼び出しに2つのラムダ式を渡して、返されたインスタンスを実行しなさい。

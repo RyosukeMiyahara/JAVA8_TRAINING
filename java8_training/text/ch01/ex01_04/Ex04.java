@@ -22,6 +22,10 @@ public class Ex04 {
     });
   }
 
+  public static void sortFileArrayLambda(File[] files) {
+
+  }
+
   public static void getSubDirectoryFiles(ArrayList<File> list, File directoryPath) {
     File[] files = directoryPath.listFiles();
     for (File oneFile: files) {
@@ -42,6 +46,7 @@ public class Ex04 {
       fileArray[i] = list.get(i);
     }
 
+    System.out.println(" --- Before sort --- ");
     for(File oneFile: fileArray) {
       System.out.println(oneFile);
     }
@@ -49,6 +54,7 @@ public class Ex04 {
 
     sortFileArrayComparator(fileArray);
 
+      System.out.println(" --- After sort --- ");
     for(File oneFile: fileArray) {
       System.out.println(oneFile);
     }

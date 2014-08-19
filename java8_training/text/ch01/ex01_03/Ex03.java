@@ -5,6 +5,7 @@ import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.util.LinkedList;
 
+//TODO: エンクロージングスコープからキャプチャされる変数はどれですか
 public class Ex03 {
 
   public static void getFilesByExtensionFilenameFilter(LinkedList<File> list, String directoryPath, String extension) {

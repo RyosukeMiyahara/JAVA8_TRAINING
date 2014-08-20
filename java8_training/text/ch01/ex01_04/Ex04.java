@@ -23,7 +23,15 @@ public class Ex04 {
   }
 
   public static void sortFileArrayLambda(File[] files) {
-
+    Array.sort(files, (first, second) -> {
+      if (first.isDirectory() && !second.isDirectory()) {
+        return -1;
+      } else if (!first.isDirectory() && second.isDirectory()) {
+        return 1;
+      } else {
+        return first.compareTo(second);
+      }
+    });
   }
 
   public static void getSubDirectoryFiles(ArrayList<File> list, File directoryPath) {

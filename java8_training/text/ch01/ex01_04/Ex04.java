@@ -23,7 +23,7 @@ public class Ex04 {
   }
 
   public static void sortFileArrayLambda(File[] files) {
-    Array.sort(files, (first, second) -> {
+    Arrays.sort(files, (first, second) -> {
       if (first.isDirectory() && !second.isDirectory()) {
         return -1;
       } else if (!first.isDirectory() && second.isDirectory()) {
@@ -47,7 +47,8 @@ public class Ex04 {
 
   public static void main(String[] args) {
     ArrayList<File> list = new ArrayList<File>();
-    getSubDirectoryFiles(list, new File("D:\\10_development\\git\\java8_training"));
+    // getSubDirectoryFiles(list, new File("D:\\10_development\\git\\java8_training"));
+    getSubDirectoryFiles(list, new File("C:\\home\\miyahara\\90_warehouse\\01_git\\JAVA8_TRAINING"));
     File[] fileArray = new File[list.size()];
 
     for(int i = 0; i < list.size(); i++) {
@@ -60,7 +61,8 @@ public class Ex04 {
     }
     System.out.println("");
 
-    sortFileArrayComparator(fileArray);
+    // sortFileArrayComparator(fileArray);
+    sortFileArrayLambda(fileArray);
 
       System.out.println(" --- After sort --- ");
     for(File oneFile: fileArray) {

@@ -4,6 +4,8 @@ import java.util.LinkedList;
 
 public class EX02_01 {
 
+  private long counterForParallelThread = 0;
+
   public static long countLongerWordsSequential(LinkedList<String> words) {
     long count = 0;
     for (String w: words) {
@@ -17,6 +19,11 @@ public class EX02_01 {
   public static long countLongerWordsParallelStream(LinkedList<String> words) {
     long count = words.parallelStream().filter(w -> w.length() > 8).count();
     return count;
+  }
+
+  public static long countLongerWordsParallelThread(LinkedList<String> words) {
+    Thread[] threads = new Thread[10];
+    
   }
 
   public static void main(String[] args) {

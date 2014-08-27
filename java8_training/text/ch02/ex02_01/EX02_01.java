@@ -5,8 +5,10 @@ import java.util.LinkedList;
 public class EX02_01 {
 
   private static int targetLength = 8;
+  private static int threadNum = 10;
 
-  private static volatile long counterForParallelThread = 0;
+  private volatile long counterForParallelThread = 0;
+  private volatile int workingThreads = 0;
 
   public static long countLongerWordsSequential(LinkedList<String> words) {
     long count = 0;
@@ -23,19 +25,36 @@ public class EX02_01 {
     return count;
   }
 
-  public static long countLongerWordsParallelThread(LinkedList<String> words) {
+  public long countLongerWordsParallelThread(LinkedList<String> words) {
     counterForParallelThread = 0;
-    Thread[] threads = new Thread[10];
-
+    if (words.size() < threadNum) {
+      ++workingThreads;
+      Thread thread = new Thread(countLongerWordsParallelThreadSegment(words, 0, words.size() - 1));
+      thread.start();
+    } else {
+      Thread[] threads = new Thread[threadNum];
+      for (int i = 0; i < threadNum; i++) {
+        threads[i] = new Thread(countLongerWordsParallelThreadSegment(words, i * words.size()/threadNum, (i + 1) * words.size() / threadNum));
+      }
+    }
+    while(workingThreads != 0) {
+      try {
+        wait();
+      } catch(InterruptedException e) {
+      }
+    }
+    return counterForParallelThread;
   }
 
-  public static Runnable countLongerWordsParallelThreadSegment(LinkedList<String> words, int start, int end) {
+  public Runnable countLongerWordsParallelThreadSegment(LinkedList<String> words, int start, int end) {
     Runnable runnable = () -> {
-      for (int i = start; i < end; i++) {
+      for (int i = start; i <= end; i++) {
         if (words.get(i).length() > targetLength) {
           ++counterForParallelThread;
         }
       }
+      --workingThreads;
+      notifyAll();
     };
     return runnable;
   }

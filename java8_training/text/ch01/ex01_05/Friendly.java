@@ -67,7 +67,7 @@ public class Friendly
             }
         }, "Thread2").start();
         */
-        new Thread(() -> cory.hug()).start();
+        new Thread(cory::hug).start();
     }
 
 }

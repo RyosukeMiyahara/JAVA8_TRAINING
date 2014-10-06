@@ -1,22 +1,42 @@
 package ch01.ex01_06;
 
+import java.util.concurrent.Callable;
+
 public class EX01_06 {
 
   public static Runnable uncheck(RunnableEx runner) {
-    return () -> {try {
+    return () -> {
+      try {
       runner.run();
-    } catch(Exception ex) {
-      System.out.println(ex);
-    }
-  };
+      } catch(Exception ex) {
+        System.out.println(ex);
+      }
+    };
+  }
+
+  public static Runnable uncheckCallable(Callable<?> runner) {
+    return () -> {
+      try {
+      runner.call();
+      } catch(Exception ex) {
+        System.out.println(ex);
+      }
+    };
   }
 
   public static void main(String[] args) {
-    new Thread(uncheck(() ->
-    {
-      System.out.println("Zzz");
+    new Thread(uncheck(() -> {
+      System.out.println("Zzz on uncheck");
       Thread.sleep(1000);
     })).start();
+    // catch(InteruptedException)が必要ありません！
+
+    new Thread(uncheckCallable(() -> {
+        System.out.println("Zzz on uncheckCallable");
+        Thread.sleep(1000);
+        return null;
+      }
+    )).start();
     // catch(InteruptedException)が必要ありません！
   }
 

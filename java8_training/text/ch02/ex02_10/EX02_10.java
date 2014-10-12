@@ -1,18 +1,16 @@
 package ch02.ex02_10;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 public class EX02_10 {
   public static double getDoubleStreamAverage(Stream<Double> doubleStream) {
     double result;
-    // long streamCount = doubleStream.count();
-    // long streamCount = 1;
+    AtomicInteger count = new AtomicInteger();
     result = doubleStream.reduce(
         0.0,
-        (first, second)->first + second,
-        (total1, total2)->(total1 * total2)/3);
-      // return total1;
-    return result;
+        (first, second)->{count.incrementAndGet(); return first + second;});
+    return result/(double)count.get();
   }
 
   public static void main(String[] args) {

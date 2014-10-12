@@ -4,11 +4,30 @@ Stream<ArrayList<T>>内のすべての要素を、1つのArrayList<T>へまと�
 
 ## 出力結果
 
-Panda
-Giant Panda
-Lesser Panda
-Cat
-Dog
-Bird
-Mouse
-Keyboard
+    combineArrayListStream1
+    Panda
+    Giant Panda
+    Lesser Panda
+    Cat
+    Dog
+    Bird
+    Mouse
+    Keyboard
+    combineArrayListStream2
+    Panda
+    Giant Panda
+    Lesser Panda
+    Cat
+    Dog
+    Bird
+    Mouse
+    Keyboard
+    combineArrayListStream3
+    Panda
+    Giant Panda
+    Lesser Panda
+    Cat
+    Dog
+    Bird
+    Mouse
+    Keyboard

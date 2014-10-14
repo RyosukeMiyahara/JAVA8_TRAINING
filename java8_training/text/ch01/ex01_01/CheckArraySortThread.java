@@ -1,10 +1,8 @@
-// TODO: Write requrement, and change output.txt to README.md
-
 package ch01.ex01_01;
 
 import java.util.Arrays;
 
-public class Ex01 {
+public class CheckArraySortThread {
 
   public static void showPandas(String[] pandas) {
     System.out.println("");

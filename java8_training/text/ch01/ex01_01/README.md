@@ -20,3 +20,5 @@ Arrays.sortメソッド内で呼び出されるコンパレータのコードは
     1: Giant panda
     2: Lesser panda
 
+## 回答
+sortメソッドを呼び出してスレッドで実行された

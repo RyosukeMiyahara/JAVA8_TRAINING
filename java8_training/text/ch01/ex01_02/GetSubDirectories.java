@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.LinkedList;
 
-public class Ex02 {
+public class GetSubDirectories {
   public static void getSubDirectoriesFileFilter(LinkedList<File> list, String directoryPath) {
     File file = new File(directoryPath);
     FileFilter directoryFilter = new FileFilter() {

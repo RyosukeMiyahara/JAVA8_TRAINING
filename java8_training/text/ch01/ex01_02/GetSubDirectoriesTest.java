@@ -7,7 +7,7 @@ import java.util.LinkedList;
 
 import org.junit.Test;
 
-public class Ex02Test {
+public class GetSubDirectoriesTest {
 
   @Test
   public void testCompareFileListMatch() {
@@ -21,7 +21,7 @@ public class Ex02Test {
     list1.add(file2);
     list2.add(file1);
     list2.add(file2);
-    assertTrue(Ex02.compareFileList(list1, list2));
+    assertTrue(GetSubDirectories.compareFileList(list1, list2));
   }
 
   @Test
@@ -39,13 +39,13 @@ public class Ex02Test {
     list2.add(file1);
     list2.add(file3);
 
-    assertFalse(Ex02.compareFileList(list1, list2));
+    assertFalse(GetSubDirectories.compareFileList(list1, list2));
   }
 
   @Test
   public void testGetSubDirectoriesFileFilter() {
     LinkedList<File> list = new LinkedList<File>();
-    Ex02.getSubDirectoriesFileFilter(list, System.getProperty("user.dir"));
+    GetSubDirectories.getSubDirectoriesFileFilter(list, System.getProperty("user.dir"));
     boolean isEx01_02Found = false;
     boolean isReadmeFound = false;
     for(File oneFile: list) {
@@ -64,18 +64,18 @@ public class Ex02Test {
   public void testGetSubDirectoriesLambda() {
     LinkedList<File> listFileFilter = new LinkedList<File>();
     LinkedList<File> listLambda = new LinkedList<File>();
-    Ex02.getSubDirectoriesFileFilter(listFileFilter, System.getProperty("user.dir"));
-    Ex02.getSubDirectoriesLambda(listLambda, System.getProperty("user.dir"));
-    assertTrue(Ex02.compareFileList(listFileFilter, listLambda));
+    GetSubDirectories.getSubDirectoriesFileFilter(listFileFilter, System.getProperty("user.dir"));
+    GetSubDirectories.getSubDirectoriesLambda(listLambda, System.getProperty("user.dir"));
+    assertTrue(GetSubDirectories.compareFileList(listFileFilter, listLambda));
   }
 
   @Test
   public void testGetSubDirectoriesMethodReference() {
     LinkedList<File> listFileFilter = new LinkedList<File>();
     LinkedList<File> listMethodReference = new LinkedList<File>();
-    Ex02.getSubDirectoriesFileFilter(listFileFilter, System.getProperty("user.dir"));
-    Ex02.getSubDirectoriesMethodReference(listMethodReference, System.getProperty("user.dir"));
-    assertTrue(Ex02.compareFileList(listFileFilter, listMethodReference));
+    GetSubDirectories.getSubDirectoriesFileFilter(listFileFilter, System.getProperty("user.dir"));
+    GetSubDirectories.getSubDirectoriesMethodReference(listMethodReference, System.getProperty("user.dir"));
+    assertTrue(GetSubDirectories.compareFileList(listFileFilter, listMethodReference));
   }
 
 

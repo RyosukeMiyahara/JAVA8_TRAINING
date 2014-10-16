@@ -2,9 +2,19 @@ package ch01.ex01_02;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 public class GetSubDirectories {
+
+  /**
+   * Get sub directories under the specified path, using FileFilter.
+   *
+   * @param list This function add subdirectories to this list
+   * @param directoryPath This function searches under the this path
+   * @return none
+   */
   public static void getSubDirectoriesFileFilter(LinkedList<File> list, String directoryPath) {
     File file = new File(directoryPath);
     FileFilter directoryFilter = new FileFilter() {
@@ -20,6 +30,13 @@ public class GetSubDirectories {
     }
   }
 
+  /**
+   * Get sub directories under the specified path, using Lambda.
+   *
+   * @param list This function add subdirectories to this list
+   * @param directoryPath This function searches under the this path
+   * @return none
+   */
   public static void getSubDirectoriesLambda(LinkedList<File> list, String directoryPath) {
     System.out.println(directoryPath);
     File file = new File(directoryPath);
@@ -31,6 +48,13 @@ public class GetSubDirectories {
     }
   }
 
+  /**
+   * Get sub directories under the specified path, using method reference.
+   *
+   * @param list This function add subdirectories to this list
+   * @param directoryPath This function searches under the this path
+   * @return none
+   */
   public static void getSubDirectoriesMethodReference(LinkedList<File> list, String directoryPath) {
     File file = new File(directoryPath);
     FileFilter directoryFilter = File::isDirectory;
@@ -42,17 +66,36 @@ public class GetSubDirectories {
     }
   }
 
+  /**
+   * Check provided two file lists are the same or not.
+   *
+   * @param list1 file list to be checked
+   * @param list2 file list to be checked
+   * @return true list1 and list2 are the same list
+   *         false list1 and list2 are not the same list
+   */
   public static boolean compareFileList(LinkedList<File> list1, LinkedList<File> list2) {
+
+    // Check size
     if (list1.size() != list2.size()) {
       return false;
     }
 
+    // Check content
+    Set<File> fileSet = new HashSet<File>(); // to check duplication
     for (File oneFile: list1) {
+      // Check content matches or not
       if (list2.indexOf(oneFile) == -1) {
+        return false;
+      }
+
+      // Check duplication
+      if (!fileSet.add(oneFile)) {
         return false;
       }
     }
 
+    // list1 and list2 are the same list
     return true;
   }
 

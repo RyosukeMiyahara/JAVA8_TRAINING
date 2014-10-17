@@ -66,7 +66,6 @@ public class GetFilesByExtension {
 
   public static void main(String[] args) {
     LinkedList<File> listFilenameFilter = new LinkedList<File>();
-    // getFilesByExtensionFilenameFilter(listFilenameFilter, "D:\\10_development\\git\\java8_training", ".java");
 
     getFilesByExtensionFilenameFilter(listFilenameFilter, System.getProperty("user.dir"), ".java");
     for(File oneFile: listFilenameFilter) {
@@ -76,7 +75,6 @@ public class GetFilesByExtension {
     System.out.println("");
 
     LinkedList<File> listLambda = new LinkedList<File>();
-    // getFilesByExtensionLambda(listLambda, "D:\\10_development\\git\\java8_training", ".java");
     getFilesByExtensionLambda(listLambda, System.getProperty("user.dir"), ".java");
     for(File oneFile: listLambda) {
       System.out.println(oneFile);

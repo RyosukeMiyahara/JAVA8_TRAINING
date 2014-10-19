@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-public class EX02_09 {
+public class CombineArrayListStream {
 
+  /**
+   * Combine array list stream using simple reduce
+   * @param stream This stream is combined
+   * @return Combined array list
+   */
   public static <T> ArrayList<T> combineArrayListStream1(Stream<ArrayList<T>> stream) {
     Optional<ArrayList<T>> result = stream.reduce((first, second)->{
       first.addAll(second);
@@ -18,6 +23,11 @@ public class EX02_09 {
     }
   }
 
+  /**
+   * Combine array list stream using reduce with identity
+   * @param stream This stream is combined
+   * @return Combined array list
+   */
   public static <T> ArrayList<T> combineArrayListStream2(Stream<ArrayList<T>> stream) {
     ArrayList<T> arrayList = new ArrayList<T>();
     arrayList = stream.reduce(arrayList, (first, second)->{
@@ -27,6 +37,11 @@ public class EX02_09 {
     return arrayList;
   }
 
+  /**
+   * Combine array list stream using reduce with identity and combiner
+   * @param stream This stream is combined
+   * @return Combined array list
+   */
   public static <T> ArrayList<T> combineArrayListStream3(Stream<ArrayList<T>> stream) {
     ArrayList<T> arrayList = new ArrayList<T>();
     arrayList = stream.reduce(arrayList,
@@ -51,15 +66,11 @@ public class EX02_09 {
   }
 
   public static void main(String[] args) {
-
-
-
     System.out.println("combineArrayListStream1");
     ArrayList<String> combined1 = combineArrayListStream1(createStringArrayListStream());
     for(String word: combined1) {
       System.out.println(word);
     }
-
 
     System.out.println("combineArrayListStream2");
     ArrayList<String> combined2 = combineArrayListStream2(createStringArrayListStream());

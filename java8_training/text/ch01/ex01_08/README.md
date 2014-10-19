@@ -14,3 +14,6 @@
 Peter
 Paul
 Mary
+
+## 回答
+従来のforループでは、names[i]がeffective finalではないためコンパイルエラーになる。

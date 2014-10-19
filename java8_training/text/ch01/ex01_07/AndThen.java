@@ -11,9 +11,10 @@ public class AndThen {
   }
 
   public static void main(String[] args) {
-    Runnable first = () -> {System.out.println("I'm first!");};
-    Runnable second = () -> {System.out.println("I'm second!!");};
-    Runnable combined = AndThen.andThen(first, second);
+    Runnable combined = AndThen.andThen(
+        () -> {System.out.println("I'm first!");},
+        () -> {System.out.println("I'm second!!");}
+        );
     Thread thread = new Thread(combined);
     thread.start();
   }

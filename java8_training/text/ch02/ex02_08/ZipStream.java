@@ -4,11 +4,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Stream;
 
-public class EX02_08 {
+public class ZipStream {
+  /**
+   * Zip streams alternately.
+   * When one stream empties, zipping stops.
+   * @param first One zipped stream
+   * @param second The other zipped stream
+   * @return Zipped stream
+   */
   @SuppressWarnings("unchecked")
   public static <T> Stream<T> zip(Stream<T> first, Stream<T> second) {
-    Object[] firstArray = first.toArray();
-    Object[] secondArray = second.toArray();
+    T[] firstArray = (T[])first.toArray();
+    T[] secondArray = (T[])second.toArray();
     List<T> list = new LinkedList<T>();
     for (int i = 0; i < Math.min(firstArray.length, secondArray.length); i++) {
       list.add((T)firstArray[i]);

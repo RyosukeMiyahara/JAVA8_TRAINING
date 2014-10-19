@@ -69,7 +69,7 @@ public class CountLongerWords {
     return counterForParallelThread;
   }
 
-  public Runnable countLongerWordsParallelThreadSegment(LinkedList<String> words, int start, int end) {
+  private Runnable countLongerWordsParallelThreadSegment(LinkedList<String> words, int start, int end) {
     Runnable runnable = () -> {
       for (int i = start; i <= end; i++) {
         if (words.get(i).length() > targetLength) {

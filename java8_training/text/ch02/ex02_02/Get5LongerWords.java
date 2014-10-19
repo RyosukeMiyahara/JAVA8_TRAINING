@@ -7,7 +7,13 @@ import java.util.stream.Stream;
 public class Get5LongerWords {
   static final int LIMIT = 5;
 
-  static Stream<String> get5LongerWords(Stream<String> stream, int length) {
+  /**
+   * Get 5 longer words from String stream
+   * @param stream 5 words are retrieved from this stream
+   * @param length search word length
+   * @return filtered stream
+   */
+  public static Stream<String> get5LongerWords(Stream<String> stream, int length) {
     return stream.filter(
         word-> {
           System.out.println("filter is called");

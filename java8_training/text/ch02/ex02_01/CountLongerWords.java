@@ -2,7 +2,7 @@ package ch02.ex02_01;
 
 import java.util.LinkedList;
 
-public class EX02_01 {
+public class CountLongerWords {
 
   private static int targetLength = 8;
   private static int threadNum = 10;
@@ -10,6 +10,11 @@ public class EX02_01 {
   private volatile long counterForParallelThread = 0;
   private volatile int workingThreads = 0;
 
+  /**
+   * Count longer words
+   * @param words This function counts longer words from this list
+   * @return count
+   */
   public static long countLongerWordsSequential(LinkedList<String> words) {
     long count = 0;
     for (String w : words) {
@@ -20,11 +25,22 @@ public class EX02_01 {
     return count;
   }
 
+  /**
+   * Count longer words using parallel stream
+   * @param words This function counts longer words from this list
+   * @return count
+   */
   public static long countLongerWordsParallelStream(LinkedList<String> words) {
     long count = words.parallelStream().filter(w -> w.length() > targetLength).count();
     return count;
   }
 
+  /**
+   * Count longer words using parallel threads
+   * In this function, multiple threads works on separated segment of provided list
+   * @param words This function counts longer words grom this list
+   * @return count
+   */
   public long countLongerWordsParallelThread(LinkedList<String> words) {
     counterForParallelThread = 0;
     if (words.size() < threadNum) {
@@ -82,20 +98,20 @@ public class EX02_01 {
     long end = 0;
 
     start = System.currentTimeMillis();
-    System.out.println("Sequential version result: " + EX02_01.countLongerWordsSequential(words));
+    System.out.println("Sequential version result: " + CountLongerWords.countLongerWordsSequential(words));
     end = System.currentTimeMillis();
     System.out.println("Sequential version time: " + (end - start) + "msec");
 
     System.out.println("");
 
     start = System.currentTimeMillis();
-    System.out.println("ParallelStream version result: " + EX02_01.countLongerWordsParallelStream(words));
+    System.out.println("ParallelStream version result: " + CountLongerWords.countLongerWordsParallelStream(words));
     end = System.currentTimeMillis();
     System.out.println("ParallelStream version time: " + (end - start) + "msec");
 
     System.out.println("");
 
-    EX02_01 ex02_01 = new EX02_01();
+    CountLongerWords ex02_01 = new CountLongerWords();
     start = System.currentTimeMillis();
     System.out.println("ParallelThread version result: " + ex02_01.countLongerWordsParallelThread(words));
     end = System.currentTimeMillis();

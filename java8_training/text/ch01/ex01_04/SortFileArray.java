@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public class SortFileArray {
 
@@ -46,6 +47,11 @@ public class SortFileArray {
     });
   }
 
+  /**
+   * Get sub directories and files under the specified path
+   * @param list Found directories and files are added into this list
+   * @param directoryPath Search target
+   */
   public static void getSubDirectoryFiles(ArrayList<File> list, File directoryPath) {
     File[] files = directoryPath.listFiles();
     for (File oneFile: files) {
@@ -54,18 +60,25 @@ public class SortFileArray {
         getSubDirectoryFiles(list, oneFile);
       }
     }
+  }
 
+  /**
+   * Convert File List into File Array
+   * @param list This list converted into File Array
+   */
+  public static File[] convertFileListToFileArray(List<File> list) {
+    File[] fileArray = new File[list.size()];
+    for(int i = 0; i < list.size(); i++) {
+      fileArray[i] = list.get(i);
+    }
+    return fileArray;
   }
 
   public static void main(String[] args) {
     ArrayList<File> list = new ArrayList<File>();
-    // getSubDirectoryFiles(list, new File("D:\\10_development\\git\\java8_training"));
-    getSubDirectoryFiles(list, new File("C:\\home\\miyahara\\90_warehouse\\01_git\\JAVA8_TRAINING"));
-    File[] fileArray = new File[list.size()];
-
-    for(int i = 0; i < list.size(); i++) {
-      fileArray[i] = list.get(i);
-    }
+    getSubDirectoryFiles(list, new File("D:\\10_development\\git\\java8_training"));
+    // getSubDirectoryFiles(list, new File("C:\\home\\miyahara\\90_warehouse\\01_git\\JAVA8_TRAINING"));
+    File[] fileArray = convertFileListToFileArray(list);
 
     System.out.println(" --- Before sort --- ");
     for(File oneFile: fileArray) {

@@ -6,11 +6,21 @@ public class CountLongerWords {
 
   private static final int targetLength = 8;
 
+  /**
+   * Count longer words using stream
+   * @param words Longer words are searched from this stream
+   * @return count
+   */
   public static long countLongerWordsStream(LinkedList<String> words) {
     long count = words.stream().filter(w -> w.length() > targetLength).count();
     return count;
   }
 
+  /**
+   * Count longer words using parallel stream
+   * @param words Longer words are searched from this stream
+   * @return count
+   */
   public static long countLongerWordsParallelStream(LinkedList<String> words) {
     long count = words.parallelStream().filter(w -> w.length() > targetLength).count();
     return count;

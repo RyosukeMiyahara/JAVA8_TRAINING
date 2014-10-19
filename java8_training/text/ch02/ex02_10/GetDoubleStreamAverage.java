@@ -4,6 +4,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
 public class GetDoubleStreamAverage {
+
+  /**
+   * Get average of provided double stream
+   * @param doubleStream
+   * @return average of provided double stream
+   */
   public static double getDoubleStreamAverage(Stream<Double> doubleStream) {
     double result;
     AtomicInteger count = new AtomicInteger();

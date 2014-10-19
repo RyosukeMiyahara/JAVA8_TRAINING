@@ -2,7 +2,7 @@ package ch02.ex02_04;
 
 import java.util.stream.Stream;
 
-public class EX02_04 {
+public class HowToCreateIntStream {
 
   public static void main(String[] args) {
     int[] values = {1, 4, 9, 16};

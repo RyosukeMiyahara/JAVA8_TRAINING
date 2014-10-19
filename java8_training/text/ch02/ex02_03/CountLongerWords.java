@@ -2,7 +2,7 @@ package ch02.ex02_03;
 
 import java.util.LinkedList;
 
-public class EX02_03 {
+public class CountLongerWords {
 
   private static final int targetLength = 8;
 
@@ -28,14 +28,14 @@ public class EX02_03 {
     long end = 0;
 
     start = System.nanoTime();
-    System.out.println("        Stream version result: " + EX02_03.countLongerWordsStream(words));
+    System.out.println("        Stream version result: " + CountLongerWords.countLongerWordsStream(words));
     end = System.nanoTime();
     System.out.println("        Stream version time: " + (end - start) + "nsec");
 
     System.out.println("");
 
     start = System.nanoTime();
-    System.out.println("ParallelStream version result: " + EX02_03.countLongerWordsParallelStream(words));
+    System.out.println("ParallelStream version result: " + CountLongerWords.countLongerWordsParallelStream(words));
     end = System.nanoTime();
     System.out.println("ParallelStream version time: " + (end - start) + "nsec");
 

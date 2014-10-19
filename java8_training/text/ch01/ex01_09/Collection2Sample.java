@@ -3,10 +3,10 @@ package ch01.ex01_09;
 import java.util.LinkedList;
 
 
-public class Main extends LinkedList<String> implements Collection2<String> {
+public class Collection2Sample extends LinkedList<String> implements Collection2<String> {
 
   public static void main(String[] args) {
-    Main main = new Main();
+    Collection2Sample main = new Collection2Sample();
     main.add("Panda");
     main.add("Dog");
     main.add("Lesser Panda");

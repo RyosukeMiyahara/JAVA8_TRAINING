@@ -3,7 +3,7 @@ package ch02.ex02_10;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-public class EX02_10 {
+public class GetDoubleStreamAverage {
   public static double getDoubleStreamAverage(Stream<Double> doubleStream) {
     double result;
     AtomicInteger count = new AtomicInteger();

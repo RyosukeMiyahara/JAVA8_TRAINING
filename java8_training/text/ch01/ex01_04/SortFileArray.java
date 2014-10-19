@@ -5,8 +5,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class Ex04 {
+public class SortFileArray {
 
+  /**
+   * Sort File array, as the following order, using Comparator
+   *  - directory ordered by path name
+   *  - file ordered by path name
+   * @param files This array is sorted
+   */
   public static void sortFileArrayComparator(File[] files) {
     Arrays.sort(files, new Comparator<File>() {
       @Override
@@ -22,6 +28,12 @@ public class Ex04 {
     });
   }
 
+  /**
+   * Sort File array, as the following order, using Lambda
+   *  - directory ordered by path name
+   *  - file ordered by path name
+   * @param files This array is sorted
+   */
   public static void sortFileArrayLambda(File[] files) {
     Arrays.sort(files, (first, second) -> {
       if (first.isDirectory() && !second.isDirectory()) {

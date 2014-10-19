@@ -2,7 +2,7 @@ package ch01.ex01_06;
 
 import java.util.concurrent.Callable;
 
-public class EX01_06 {
+public class Uncheck {
 
   public static Runnable uncheck(RunnableEx runner) {
     return () -> {

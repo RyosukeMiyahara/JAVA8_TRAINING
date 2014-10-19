@@ -6,7 +6,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class EX02_13 {
+public class CountShorterWords {
+
+  /**
+   * Count shorter words, using Collectors.groupingBy and Collectors.counting, and collect method.
+   * @param length Word shorter than this is counted
+   * @param words Count shorter words from this stream
+   * @return count
+   */
   public static long[] countShorterWords(int length, Stream<String> words) {
     long[] result = new long[length];
     Map<Object, Long> map = words.parallel().filter(s-> s.length() < length).parallel().collect(Collectors.groupingBy(s->s.length(), Collectors.counting()));

@@ -11,3 +11,6 @@ ParallelStream version time: 175msec
 
 ParallelThread version result: 20000
 ParallelThread version time: 153msec
+
+## > （みなさんは、単一カウンターを更新するためにスレッドを使用したくはないでしょう。なぜですか）。
+同期に注意しなければならないため。

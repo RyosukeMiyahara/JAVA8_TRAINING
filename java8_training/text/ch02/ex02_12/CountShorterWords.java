@@ -5,8 +5,15 @@ import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Stream;
 
-public class EX02_12 {
+public class CountShorterWords {
 
+  /**
+   * Count shorter words.
+   * This is NG function because counter is not atomic
+   * @param length Word shorter than this is counted
+   * @param words Count shorter words from this stream
+   * @return count
+   */
   public static int[] countShorterWordsNG(int length, Stream<String> words) {
     int[] shortWords = new int [length];
     words.parallel().forEach(
@@ -14,6 +21,12 @@ public class EX02_12 {
     return shortWords;
   }
 
+  /**
+   * Count shorter words.
+   * @param length Word shorter than this is counted
+   * @param words Count shorter words from this stream
+   * @return count
+   */
   public static AtomicInteger[] countShorterWordsAtomic(int length, Stream<String> words) {
     AtomicInteger[] shortWords = new AtomicInteger[length];
     for(int i = 0; i < length; i++) {

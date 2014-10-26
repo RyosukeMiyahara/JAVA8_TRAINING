@@ -1,13 +1,16 @@
 package ch03.ex03_01;
 
-import java.util.function.Predicate;
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.StreamHandler;
 
 public class DeferredLogger {
-  static private Logger instanceLogger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+  static private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
+  public static void setLoggerLevel(Level newLevel) {
+    logger.setLevel(newLevel);
+  }
 
   public static void info(Logger logger, Supplier<String> message) {
     if(logger.isLoggable(Level.INFO)) {
@@ -15,26 +18,23 @@ public class DeferredLogger {
     }
   }
 
-  public static <T> void logInfo(Level level, Predicate<T> filter, Supplier<String> message) {
-    if (instanceLogger.isLoggable(level)) {
-      if (filter.test(null)) {
-
+  public static <T> void logInfo(Level level, BooleanSupplier filter, Supplier<String> message) {
+    System.out.println("a");
+    if (logger.isLoggable(level)) {
+      System.out.println("hoge");
+      if (filter.getAsBoolean()) {
+        System.out.println("fuga");
+        logger.log(level, message.get());
       }
     }
   }
-  public static void main(String[] args) {
-    Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    logger.addHandler(new StreamHandler(){
-      {
-        setOutputStream(System.out);
-        setLevel(Level.ALL);
-      }
-    });
-    logger.setUseParentHandlers(false);
-    logger.setLevel(Level.ALL);
 
-    logger.fine("Loggerテスト3です。fine");
-    logger.info("Loggerテスト3です。info");
-    logger.severe("Loggerテスト3です。severe");
+  public static void main(String[] args) {
+    String a[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"};
+    DeferredLogger.setLoggerLevel(Level.FINEST);
+    int i = 10;
+    logInfo(Level.INFO, () -> i == 10, () -> "A[10] = " + a[10]);
+    int j = 5;
+    logInfo(Level.FINEST, () -> j == 10, () -> "A[10] = " + a[10]);
   }
 }

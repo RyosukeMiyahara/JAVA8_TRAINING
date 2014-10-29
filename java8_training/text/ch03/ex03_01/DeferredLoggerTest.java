@@ -16,12 +16,12 @@ public class DeferredLoggerTest {
     assertEquals(0, DeferredLogger.getAssessingCount());
 
     int i = 10;
-    DeferredLogger.logInfo(Level.INFO, () -> i == 10, () -> "A[10] = " + a[10]);
+    DeferredLogger.logIf(Level.INFO, () -> i == 10, () -> "A[10] = " + a[10]);
 
     assertEquals(1, DeferredLogger.getAssessingCount());
 
     int j = 5;
-    DeferredLogger.logInfo(Level.FINEST, () -> j == 10, () -> "A[10] = " + a[10]);
+    DeferredLogger.logIf(Level.FINEST, () -> j == 10, () -> "A[10] = " + a[10]);
 
     assertEquals(1, DeferredLogger.getAssessingCount());
   }

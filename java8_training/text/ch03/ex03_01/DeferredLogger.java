@@ -7,6 +7,7 @@ import java.util.logging.Logger;
 
 public class DeferredLogger {
   static private Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+  static private int assessingCount = 0;
 
   public static void setLoggerLevel(Level newLevel) {
     logger.setLevel(newLevel);
@@ -19,22 +20,16 @@ public class DeferredLogger {
   }
 
   public static <T> void logInfo(Level level, BooleanSupplier filter, Supplier<String> message) {
-    System.out.println("a");
     if (logger.isLoggable(level)) {
-      System.out.println("hoge");
+      assessingCount++;
       if (filter.getAsBoolean()) {
-        System.out.println("fuga");
         logger.log(level, message.get());
       }
     }
   }
 
-  public static void main(String[] args) {
-    String a[] = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k"};
-    DeferredLogger.setLoggerLevel(Level.FINEST);
-    int i = 10;
-    logInfo(Level.INFO, () -> i == 10, () -> "A[10] = " + a[10]);
-    int j = 5;
-    logInfo(Level.FINEST, () -> j == 10, () -> "A[10] = " + a[10]);
+
+  public static int getAssessingCount() {
+    return assessingCount;
   }
 }

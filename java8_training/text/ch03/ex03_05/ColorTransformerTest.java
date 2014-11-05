@@ -24,12 +24,19 @@ public class ColorTransformerTest extends Application{
   @Test
   public void transformModifiedTest() {
     Image tempImage = null;
-    int count = 0;
     for (int i = 0; i < TRIAL_MAX; i++) {
       try {
         tempImage = new Image("ch03/ex03_05/queen-mary.png");
-      } catch (Exception e) {
-        ;
+      } catch (RuntimeException e) {
+        try {
+          if (i == TRIAL_MAX - 1) {
+            throw new RuntimeException("Internal graphics could not be initialized");
+          }
+          Thread.sleep(500);
+        } catch(Exception e2) {
+          e2.printStackTrace();
+        }
+        continue;
       }
     }
     Image image = tempImage;
@@ -62,8 +69,7 @@ public class ColorTransformerTest extends Application{
 
   @Override
   public void start(Stage arg0) throws Exception {
-    // TODO 自動生成されたメソッド・スタブ
-
+    // Do nothing
   }
 
 }

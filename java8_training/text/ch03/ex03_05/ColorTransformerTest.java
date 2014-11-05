@@ -11,20 +11,29 @@ import org.junit.Test;
 
 public class ColorTransformerTest extends Application{
 
+  private static int TRIAL_MAX = 5;
+
   @BeforeClass
   public static void setUpBeforeClass() throws Exception {
     Runnable r = ()->launch(ColorTransformerTest.class, new String[0]);
     Thread thread = new Thread(r);
     thread.setDaemon(true);
     thread.start();
-    System.out.println("fuga");
   }
 
   @Test
   public void transformModifiedTest() {
-    System.out.println("muga");
-    Image image = new Image("queen-mary.png");
-    System.out.println("hoge");
+    Image tempImage = null;
+    int count = 0;
+    for (int i = 0; i < TRIAL_MAX; i++) {
+      try {
+        tempImage = new Image("ch03/ex03_05/queen-mary.png");
+      } catch (Exception e) {
+        ;
+      }
+    }
+    Image image = tempImage;
+
     Image framedImage = ColorTransformerImpl.transformModified(image,
         (x, y, c) -> {
           if (x < 10

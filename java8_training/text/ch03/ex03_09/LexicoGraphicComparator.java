@@ -10,12 +10,13 @@ public class LexicoGraphicComparator {
    * @return
    * @exception NoSuchfieldException If
    */
+  @SuppressWarnings("unchecked")
   public static Comparator lexicographicComparator(String... fieldNames) {
-    Comparator comparator;
+    Comparator<?> comparator;
     comparator = (first, second) -> {
       for (int i = 0; i < fieldNames.length; i++) {
         // Get field
-        Class c = first.getClass();
+        Class<? extends Object> c = first.getClass();
         Field f = null;
         try {
           f = c.getField(fieldNames[i]);
@@ -30,7 +31,7 @@ public class LexicoGraphicComparator {
           if (f.get(first).equals(f.get(second)) || !(Comparable.class.isInstance(f.get(first)))) {
             continue;
           }
-          return ((Comparable)f.get(first)).compareTo((Comparable)f.get(second));
+          return ((Comparable<Comparable<?>>)f.get(first)).compareTo((Comparable<?>)f.get(second));
         } catch(IllegalAccessException iae) {
           iae.printStackTrace();
         }
@@ -38,5 +39,6 @@ public class LexicoGraphicComparator {
       }
       return 0;
     };
+    return comparator;
   }
 }

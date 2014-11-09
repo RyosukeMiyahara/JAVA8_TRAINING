@@ -10,7 +10,7 @@ public class LexicoGraphicComparator {
    * @return
    * @exception NoSuchfieldException If
    */
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({ "unchecked", "rawtypes" })
   public static Comparator lexicographicComparator(String... fieldNames) {
     Comparator<?> comparator;
     comparator = (first, second) -> {

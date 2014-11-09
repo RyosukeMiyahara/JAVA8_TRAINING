@@ -12,6 +12,7 @@ public class LexicoGraphicComparatorTest {
     public String nickname;
   }
 
+  @SuppressWarnings("unchecked")
   @Test
   public void test() {
     Person person1 = new Person();

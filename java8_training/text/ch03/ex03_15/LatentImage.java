@@ -87,8 +87,6 @@ public class LatentImage extends Application{
   @Override
   public void start(Stage stage){
     Image image = new Image("ch03/ex03_15/eiffel-tower.jpg");
-    LatentImage.from(image).transform(Color::brighter).transform(Color::grayscale).toImageParallel();
-
     Image finalImage = LatentImage.from(image).transform(Color::brighter).transform(Color::grayscale).toImageParallel();
     stage.setScene(new Scene(new HBox(
        new ImageView(image),

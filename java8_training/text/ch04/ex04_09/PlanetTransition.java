@@ -3,44 +3,50 @@ package ch04.ex04_09;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.CubicCurveTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
+import javafx.scene.shape.Ellipse;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class PlanetTransition extends Application {
+  private static final int SUN_SIZE = 10;
+  private static final int EARTH_SIZE = 5;
+
+  private static final double WIDTH = 480;
+  private static final double HEIGHT = 320;
+  private static final double RADIUS_X = 200;
+  private static final double RADIUS_Y = 100;
+
+  private static final int DURATION_MILL = 4000;
+
   public void start(Stage stage) {
-    Circle sun = new Circle(10, 10, 10);
-    sun.setFill(Color.RED);
     Pane pane = new Pane();
+    Scene scene = new Scene(pane, WIDTH, HEIGHT);
+
+    Circle sun = new Circle(WIDTH/2.0, HEIGHT/2.0, SUN_SIZE);
+    sun.setFill(Color.RED);
     pane.getChildren().add(sun);
-    Scene scene = new Scene(pane);
-    sun.centerXProperty().bind(Bindings.divide(scene.widthProperty(), 2));
-    sun.centerYProperty().bind(Bindings.divide(scene.heightProperty(), 2));
 
-    Circle earth = new Circle(5, 5, 5);
-
+    Circle earth = new Circle(WIDTH/2.0, HEIGHT/2.0, EARTH_SIZE);
+    earth.setFill(Color.BLUE);
     pane.getChildren().add(earth);
 
-    Path path = new Path();
-    path.getElements().add(new MoveTo(20, 20));
-    path.getElements().add(new CubicCurveTo(380, 0, 380, 120, 200, 120));
-    path.getElements().add(new CubicCurveTo(0, 120, 0, 240, 380, 240));
+    Ellipse path = new Ellipse();
+    path.setRadiusX(RADIUS_X);
+    path.setRadiusY(RADIUS_Y);
+    path.setCenterX(WIDTH/2.0);
+    path.setCenterY(HEIGHT/2.0);
 
-    // Sample
     PathTransition pathTransition = new PathTransition();
-    pathTransition.setDuration(Duration.millis(4000));
+    pathTransition.setDuration(Duration.millis(DURATION_MILL));
     pathTransition.setPath(path);
     pathTransition.setNode(earth);
     pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);
     pathTransition.setCycleCount(Timeline.INDEFINITE);
-    pathTransition.setAutoReverse(true);
+    pathTransition.setAutoReverse(false);
     pathTransition.play();
 
     stage.setScene(scene);

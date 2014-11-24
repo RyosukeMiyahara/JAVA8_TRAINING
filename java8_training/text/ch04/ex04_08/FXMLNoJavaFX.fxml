@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
+<?import fred.*?>
+
+<GridPane xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10" fx:controller="ch04.ex04_08.FXMLNoJavaFX">
+  <children>
+    <HBox GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.columnSpan="2" alignment="CENTER" spacing="10">
+      <children>
+        <Label  fx:id="label" text="${textField.text}" GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.halignment="RIGHT" />
+        <TextField fx:id="textField" text="Panda" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+      </children>
+    </HBox>
+  </children>
+</GridPane>

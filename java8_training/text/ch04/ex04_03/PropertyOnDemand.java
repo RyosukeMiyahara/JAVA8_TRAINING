@@ -12,7 +12,7 @@ public class PropertyOnDemand {
    * @return if property is created, return propert.get()
    *         if not, return normal int value
    */
-  public int getValue() {
+  public final int getValue() {
     if (property == null) {
       return normalInt;
     } else {
@@ -25,7 +25,7 @@ public class PropertyOnDemand {
    * If property is not created, create it and set new value to property
    * @param newValue to be set to property
    */
-  public void setValue(int newValue) {
+  public final void setValue(int newValue) {
     if (property == null) {
       property = new SimpleIntegerProperty(normalInt);
       property.set(newValue);

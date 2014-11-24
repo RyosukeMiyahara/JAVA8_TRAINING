@@ -12,7 +12,7 @@ public class PropertyOnDemand {
    * @return if property is created, return propert.get()
    *         if not, return normal int value
    */
-  public int getValue() {
+  public final int getValue() {
     if (property == null) {
       return normalInt;
     } else {
@@ -25,7 +25,7 @@ public class PropertyOnDemand {
    * @param newValue if property is created, set new value to property
    *                 if not, set it to normal int
    */
-  public void setValue(int newValue) {
+  public final void setValue(int newValue) {
     if (property == null) {
       normalInt = newValue;
     } else {

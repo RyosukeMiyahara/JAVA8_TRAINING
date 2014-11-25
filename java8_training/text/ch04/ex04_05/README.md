@@ -10,6 +10,6 @@
 
 このメソッドは、ObservableValueを返し、そのObservableValueのgetValueメソッドはラムダ式の値を返します。そして、そのObservableValueのInvalidationListenerとChangeListenerが、入力のどれかが無効あるいは変更になったときに呼び出されるようにしなさい。たとえば、次の通りです。
 
-    larger.disablePropert().bind(observe(
+    larger.disableProperty().bind(observe(
     t -> t >= 100, gauge.widthProperty()));
 

@@ -14,5 +14,14 @@ UnaryOperator<T>のcomposeメソッドの戻り値型を注意深く調べなさ
       return (V v) -> apply(before.apply(v));
     }
 
-    コンパイルエラー：型 Sample のメソッド transform(Image, UnaryOperator<Color>) は引数 (Image, Function<Color,Color>) に適用できません
+    コンパイルエラー：
+	- 型の不一致: Function<Color,Color> から UnaryOperator<Color>
+	 には変換できません
+	- 型 Sample のメソッド transform(Image, UnaryOperator<Color>)
+	 は引数 (Image, Function<Color,Color>) に適用できません
+	- トークン ")" に構文エラーがあります。このトークンを削除してください
 
+
+型が一致していないため、上記の呼び出しができない。
+
+ストラクチャル型であれば同じ型と見なされるかもしれないが、Javaはノミナル型であるため、上記の呼び出しができない。

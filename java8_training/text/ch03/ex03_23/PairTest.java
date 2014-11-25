@@ -14,7 +14,7 @@ public class PairTest {
   @Test
   public void pairMapTest() {
     Pair<String> pandas = new Pair<String>("Panda", "Giant panda");
-    Pair<String> cutePandas = Pair.map(pandas, (string) -> "Cute " + string);
+    Pair<String> cutePandas = pandas.map((string) -> "Cute " + string);
     assertEquals("Cute Panda", cutePandas.getFirst());
     assertEquals("Cute Giant panda", cutePandas.getSecond());
   }

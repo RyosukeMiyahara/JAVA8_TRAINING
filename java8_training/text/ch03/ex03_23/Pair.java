@@ -18,7 +18,7 @@ public class Pair<T> {
     return second;
   }
 
-  public static <U, R> Pair<R> map(Pair<U> pair, Function<U, R> function) {
-    return new Pair<R>(function.apply(pair.getFirst()), function.apply(pair.getSecond()));
+  public <U> Pair<U> map(Function<T, U> function) {
+    return new Pair<U>(function.apply(first), function.apply(second));
   }
 }

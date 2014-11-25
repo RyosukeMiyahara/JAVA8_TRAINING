@@ -38,11 +38,26 @@ public class LatentImage extends Application{
    int width = (int) in.getWidth();
    int height = (int) in.getHeight();
    WritableImage out = new WritableImage(width, height);
-   for (ColorTransformer f : pendingOperations)
-     for (int x = 0; x < width; x++)
+   WritableImage before = new WritableImage(width, height);
+   for (int i = 0; i < pendingOperations.size(); i++) {
+     ColorTransformer f = pendingOperations.get(i);
+     for (int x = 0; x < width; x++) {
        for (int y = 0; y < height; y++) {
-         out.getPixelWriter().setColor(x,  y, f.apply(x, y, in.getPixelReader().getColor(x, y)));
+         Color newColor = null;
+         if (i == 0) {
+           newColor = f.apply(x, y, in.getPixelReader().getColor(x, y));
+         } else {
+           newColor = f.apply(x, y, before.getPixelReader().getColor(x, y));
+         }
+         out.getPixelWriter().setColor(x,  y, newColor);
+       }
+     }
+     for (int x = 0; x < width; x++) {
+       for (int y = 0; y < height; y++) {
+         before.getPixelWriter().setColor(x,  y, out.getPixelReader().getColor(x, y));
+       }
       }
+   }
    return out;
 }
 
@@ -99,7 +114,7 @@ public class LatentImage extends Application{
             newB = 255;
           }
           return Color.rgb(newR, newG, newB);
-        }).toImage();
+        }).transform(Color::brighter).toImage();
     stage.setScene(new Scene(new HBox(new ImageView(framedImage))));
     stage.show();
 

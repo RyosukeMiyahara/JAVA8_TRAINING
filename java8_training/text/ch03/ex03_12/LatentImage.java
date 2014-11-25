@@ -40,9 +40,11 @@ public class LatentImage extends Application{
    WritableImage out = new WritableImage(width, height);
    for (int x = 0; x < width; x++)
       for (int y = 0; y < height; y++) {
-         // Color c = in.getPixelReader().getColor(x, y);
-         for (ColorTransformer f : pendingOperations)
-         out.getPixelWriter().setColor(x,  y, f.apply(x, y, in.getPixelReader().getColor(x, y)));
+         Color c = in.getPixelReader().getColor(x, y);
+         for (ColorTransformer f : pendingOperations) {
+           c = f.apply(x, y, c);
+         }
+         out.getPixelWriter().setColor(x, y, c);
       }
    return out;
 }

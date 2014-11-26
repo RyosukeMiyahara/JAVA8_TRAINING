@@ -16,22 +16,39 @@ import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class LatentImage extends Application{
+public class LatentImage extends Application {
   private Image in;
   private List<UnaryOperator<Color>> pendingOperations;
 
+  /**
+   * Create LatentImage from Image
+   *
+   * @param in LatentImage is created from this
+   * @return LatentImage for specified Image
+   */
   public static LatentImage from(Image in) {
     LatentImage result = new LatentImage();
     result.in = in;
     result.pendingOperations = new ArrayList<>();
     return result;
- }
+  }
 
+  /**
+   * Specify operation to be applied to Image as UnaryOperator<Color>
+   *
+   * @param f operation to be applied to Image
+   * @return LatentImage which includes specified operation
+   */
   public LatentImage transform(UnaryOperator<Color> f) {
     pendingOperations.add(f);
     return this;
- }
+  }
 
+  /**
+   * Convert LatentImage to Image parallel
+   *
+   * @return Image from LatantImage which applied specifed operations
+   */
   public Image toImageParallel() {
     int n = Runtime.getRuntime().availableProcessors();
     Color[][] pixels = convertImageToPixels(in);
@@ -39,25 +56,27 @@ public class LatentImage extends Application{
     int width = pixels[0].length;
     Color[][] out = new Color[height][width];
     try {
-       ExecutorService pool = Executors.newCachedThreadPool();
-       for (int i = 0; i < n; i++) {
-          int fromY = i * height / n;
-          int toY = (i + 1) * height / n;
-          pool.submit(() -> {
-                for (int x = 0; x < width; x++)
-                   for (int y = fromY; y < toY; y++)
-                     for (UnaryOperator<Color> f : pendingOperations)
-                      out[y][x] = f.apply(pixels[y][x]);
-             });
-       }
-       pool.shutdown();
-       pool.awaitTermination(1, TimeUnit.HOURS);
-    }
-    catch (InterruptedException ex) {
-       ex.printStackTrace();
+      ExecutorService pool = Executors.newCachedThreadPool();
+      for (int i = 0; i < n; i++) {
+        int fromY = i * height / n;
+        int toY = (i + 1) * height / n;
+        pool.submit(() -> {
+          for (int x = 0; x < width; x++) {
+            for (int y = fromY; y < toY; y++) {
+              for (UnaryOperator<Color> f : pendingOperations) {
+                out[y][x] = f.apply(pixels[y][x]);
+              }
+            }
+          }
+        });
+      }
+      pool.shutdown();
+      pool.awaitTermination(1, TimeUnit.HOURS);
+    } catch (InterruptedException ex) {
+      ex.printStackTrace();
     }
     return convertPixelsToImage(out);
- }
+  }
 
   public static Color[][] convertImageToPixels(Image image) {
     int width = (int) image.getWidth();
@@ -65,7 +84,7 @@ public class LatentImage extends Application{
     Color[][] pixels = new Color[height][width];
     for (int x = 0; x < width; x++)
       for (int y = 0; y < height; y++)
-         pixels[y][x] = image.getPixelReader().getColor(x, y);
+        pixels[y][x] = image.getPixelReader().getColor(x, y);
     return pixels;
   }
 
@@ -73,10 +92,11 @@ public class LatentImage extends Application{
     int width = (int) in.getWidth();
     int height = (int) in.getHeight();
     WritableImage out = new WritableImage(width, height);
-    for (int x = 0; x < width; x++)
-       for (int y = 0; y < height; y++) {
-          out.getPixelWriter().setColor(x, y, c[y][x]);
-       }
+    for (int x = 0; x < width; x++) {
+      for (int y = 0; y < height; y++) {
+        out.getPixelWriter().setColor(x, y, c[y][x]);
+      }
+    }
     return out;
   }
 
@@ -85,12 +105,10 @@ public class LatentImage extends Application{
   }
 
   @Override
-  public void start(Stage stage){
+  public void start(Stage stage) {
     Image image = new Image("ch03/ex03_15/eiffel-tower.jpg");
     Image finalImage = LatentImage.from(image).transform(Color::brighter).transform(Color::grayscale).toImageParallel();
-    stage.setScene(new Scene(new HBox(
-       new ImageView(image),
-       new ImageView(finalImage))));
+    stage.setScene(new Scene(new HBox(new ImageView(image), new ImageView(finalImage))));
     stage.show();
 
   }

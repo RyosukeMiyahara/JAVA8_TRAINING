@@ -7,6 +7,12 @@ import java.util.concurrent.TimeoutException;
 import java.util.function.Function;
 
 public class FutureMap {
+  /**
+   * Create Future where function is applied when get() is called
+   * @param future basic future
+   * @param function this is applied when get() is called
+   * @return
+   */
   public static <T, U> Future<U> map(Future<T> future, Function<T, U> function) {
     return new Future<U>() {
 
@@ -36,9 +42,4 @@ public class FutureMap {
       }
     };
   }
-  public static void main(String[] args) {
-    // TODO 自動生成されたメソッド・スタブ
-
-  }
-
 }

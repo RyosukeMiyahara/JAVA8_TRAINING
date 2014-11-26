@@ -4,6 +4,13 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class StringComparator {
+  /**
+   * Create String comparator with conditions specified by params
+   * @param isAsc asc or desc
+   * @param isCaseSensitive Case sensitive or not
+   * @param isIgnoreSpace ignore space or not
+   * @return
+   */
   public static Comparator<String> generateStringComparator(boolean isAsc, boolean isCaseSensitive, boolean isIgnoreSpace) {
     return (first, second) -> {
       String firstFiltered = first;

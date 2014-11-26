@@ -7,6 +7,12 @@ import java.util.concurrent.Future;
 import java.util.function.Consumer;
 
 public class DoInParallelAsync {
+  /**
+   * Do operations parallel and asynchronously
+   * @param first first operation
+   * @param second second operation
+   * @param handler throwable handler
+   */
   public static void doInParallelAsync(Runnable first, Runnable second, Consumer<Throwable> handler) {
     Callable<Object> callable1 = Executors.callable(first);
     Callable<Object> callable2 = Executors.callable(second);

@@ -5,9 +5,9 @@ import java.util.Comparator;
 
 public class LexicoGraphicComparator {
   /**
-   *
-   * @param fieldNames
-   * @return
+   * Create comparator, which compares specified fields
+   * @param fieldNames field names to be compared
+   * @return comparator to compare specified field
    * @exception NoSuchfieldException If
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })

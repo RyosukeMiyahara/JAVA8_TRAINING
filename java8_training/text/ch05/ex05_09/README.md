@@ -1,3 +1,60 @@
 # 練習問題 5-9
 
 再度、ストリーム操作を使用して、オフセットに1時間未満の情報が含まれるすべてのタイムゾーンを見つけなさい。
+
+## 実行結果
+
+    Europe/London: PT0S
+    GMT: PT0S
+    Etc/GMT-0: PT0S
+    Europe/Jersey: PT0S
+    Atlantic/St_Helena: PT0S
+    Europe/Guernsey: PT0S
+    Europe/Isle_of_Man: PT0S
+    Etc/GMT+0: PT0S
+    Africa/Banjul: PT0S
+    Etc/GMT: PT0S
+    Africa/Freetown: PT0S
+    GB-Eire: PT0S
+    Africa/Bamako: PT0S
+    GB: PT0S
+    Africa/Conakry: PT0S
+    Portugal: PT0S
+    Europe/Stockholm: PT-1H
+    Universal: PT0S
+    Africa/Sao_Tome: PT0S
+    Africa/Ndjamena: PT-1H
+    Africa/Nouakchott: PT0S
+    UTC: PT0S
+    Etc/Universal: PT0S
+    Atlantic/Faeroe: PT0S
+    Africa/Abidjan: PT0S
+    Eire: PT0S
+    Africa/Accra: PT0S
+    Atlantic/Faroe: PT0S
+    Etc/UCT: PT0S
+    GMT0: PT0S
+    Europe/Dublin: PT0S
+    Zulu: PT0S
+    Africa/El_Aaiun: PT0S
+    Africa/Ouagadougou: PT0S
+    Atlantic/Reykjavik: PT0S
+    Atlantic/Madeira: PT0S
+    Etc/Zulu: PT0S
+    Iceland: PT0S
+    Europe/Lisbon: PT0S
+    Atlantic/Canary: PT0S
+    Africa/Lome: PT0S
+    Greenwich: PT0S
+    Africa/Casablanca: PT0S
+    Europe/Belfast: PT0S
+    Etc/GMT0: PT0S
+    America/Danmarkshavn: PT0S
+    Africa/Dakar: PT0S
+    Africa/Bissau: PT0S
+    WET: PT0S
+    Etc/Greenwich: PT0S
+    Africa/Timbuktu: PT0S
+    UCT: PT0S
+    Africa/Monrovia: PT0S
+    Etc/UTC: PT0S

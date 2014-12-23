@@ -1,10 +1,10 @@
 package ch05.ex05_07;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class TimeInterval {
-  private LocalDate start;
-  private LocalDate end;
+  private LocalDateTime start;
+  private LocalDateTime end;
 
   /**
    * Constructor for TimeInterval
@@ -13,7 +13,7 @@ public class TimeInterval {
    * @param end Interval end date
    * @throws NullPointerException
    */
-  public TimeInterval(LocalDate start, LocalDate end) {
+  public TimeInterval(LocalDateTime start, LocalDateTime end) {
     if ( (start == null) || (end == null) ) {
       throw new NullPointerException("start or end is null");
     }
@@ -31,19 +31,19 @@ public class TimeInterval {
     }
   }
 
-  public LocalDate getStart() {
+  public LocalDateTime getStart() {
     return start;
   }
 
-  public void setStart(LocalDate start) {
+  public void setStart(LocalDateTime start) {
     this.start = start;
   }
 
-  public LocalDate getEnd() {
+  public LocalDateTime getEnd() {
     return end;
   }
 
-  public void setEnd(LocalDate end) {
+  public void setEnd(LocalDateTime end) {
     this.end = end;
   }
 

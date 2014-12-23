@@ -6,12 +6,19 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class CalculateArrivalTime {
-
+  /**
+   * Calculate arrival time from departure and flight time
+   * @param departure departure time
+   * @param flightTime flight time
+   * @param dstZone ZoneId of destination
+   * @return arrival time on destination timezone
+   */
   public static ZonedDateTime calculateArrivalTime(ZonedDateTime src, Duration flightTime, ZoneId dstZone) {
     ZonedDateTime result = src.plus(flightTime);
     result = result.withZoneSameInstant(dstZone);
     return result;
   }
+
   public static void main(String[] args) {
     ZonedDateTime departure = ZonedDateTime.of(2014, 12, 23, 3, 5, 0, 0, ZoneId.of("America/Los_Angeles"));
     Duration flightTime = Duration.ofMinutes(60*10 + 50);

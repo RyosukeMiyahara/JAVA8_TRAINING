@@ -11,7 +11,7 @@ public class SearchMaximumFromCHM {
    */
   static public String searchMaximumFromCHM(ConcurrentHashMap<String, Long> map) {
     return map.reduceEntries(1, (entry1, entry2) -> {
-      if (entry1.getValue() > entry2.getValue()) {
+      if (entry1.getValue().compareTo(entry2.getValue()) > 0) {
         return entry1;
       } else {
         return entry2;

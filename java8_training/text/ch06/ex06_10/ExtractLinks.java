@@ -9,8 +9,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,13 +48,6 @@ public class ExtractLinks {
     return in1.nextLine();
  }
 
- public static <T> CompletableFuture<T> repeat(Supplier<T> action,
-    Predicate<T> until) {
-    return CompletableFuture.supplyAsync(action).thenComposeAsync((T t) ->
-       {
-       return until.test(t) ? CompletableFuture.completedFuture(t) : repeat(action, until);
-       });
- }
  public static void main(String[] args) throws ExecutionException, InterruptedException {
    String hrefPattern = "<a\\s+href\\s*=\\s*(\"[^\"]*\"|[^\\s>]*)\\s*>";
    CompletableFuture<String> getURL = CompletableFuture.supplyAsync(() -> ExtractLinks.getInput("URL"));

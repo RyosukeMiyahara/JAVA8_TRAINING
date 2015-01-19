@@ -61,8 +61,8 @@ public class ExtractLinks {
    String hrefPattern = "<a\\s+href\\s*=\\s*(\"[^\"]*\"|[^\\s>]*)\\s*>";
    CompletableFuture<String> getURL = CompletableFuture.supplyAsync(() -> ExtractLinks.getInput("URL"));
    CompletableFuture<String> readPage = getURL.thenApply((String url) -> ExtractLinks.getPage(url));
-   CompletableFuture<List<String>> links = readPage.thenApply(c -> ExtractLinks.matches(c, hrefPattern));
-   links.thenAccept(System.out::println);
+   CompletableFuture<List<String>> getLinks = readPage.thenApply(c -> ExtractLinks.matches(c, hrefPattern));
+   getLinks.thenAccept(System.out::println);
    ForkJoinPool.commonPool().awaitQuiescence(20,  TimeUnit.SECONDS);
    System.out.println("exiting");
 }

@@ -1,5 +1,6 @@
 package ch06.ex06_09;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Matrix {
@@ -26,23 +27,24 @@ public class Matrix {
         result[i][j] = 0;
         for (int k = 0; k < matrix2.length; k++) {
           result[i][j] += matrix1[i][k] * matrix2[k][j];
-          // For debug
-          // System.out.println("matrix1[" + i + "][" + k  + "]=" + matrix1[i][k]);
-          // System.out.println("matrix2[" + k + "][" + j  + "]=" + matrix2[k][j]);
-          // System.out.println("result[" + i + "][" + j  + "]=" + result[i][j]);
         }
       }
     }
     return result;
   }
 
-  public static double[][] multiplyParallel(double matrix1[][], double matrix2[][]) {
-    throw new UnsupportedOperationException();
+  public static void main(String args[]) {
+    double[][][] matrixes = new double[10][][];
+    Arrays.parallelSetAll(matrixes, i -> {
+      double[][] matrix = {{1, 1}, {1, 0}};
+      return matrix;
+    });
+    Arrays.parallelPrefix(matrixes, (first, second) -> {
+      double[][] result = Matrix.multiply(first, second);
+      return result;
+    });
+    for(int i = 0; i < matrixes.length; i++) {
+      System.out.println(matrixes[i][0][0]);
+    }
   }
-
-  public static void main(String[] args) {
-    // TODO 自動生成されたメソッド・スタブ
-
-  }
-
 }

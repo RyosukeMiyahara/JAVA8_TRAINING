@@ -18,7 +18,7 @@ public class LeapBehavior {
     System.out.println("2000/2/29 + 1 year 4times");
     LocalDate leap1plus4times = LocalDate.of(2000, 2, 29);
     for (int i = 0; i < 4; i++) {
-      leap1plus4times.plusYears(1);
+      leap1plus4times = leap1plus4times.plusYears(1);
     }
     System.out.println(leap1plus4times);
   }

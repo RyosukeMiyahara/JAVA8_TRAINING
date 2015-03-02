@@ -11,7 +11,7 @@ public class Cal {
    * @param month
    * @param year
    * @return Formartted calender as String list
-   * @exception throw IllefalArgumentException when invalid month is specified
+   * @exception throw IllegalArgumentException when invalid month is specified
    */
   public static LinkedList<String> getCalStrings(int month, int year) {
     if (month < 1 || 12 < month) {

@@ -10,10 +10,20 @@ import java.util.List;
 
 public class CountLongerWords {
 
+  /**
+   * Count longer words using stream
+   * @param words To be counted the number of longer words
+   * @return count
+   */
   public static long countLongerWordsStream(List<String> words) {
     return words.stream().filter(w -> w.length() > 12).count();
   }
 
+  /**
+   * Count longer words without stream
+   * @param words To be counted the number of longer words
+   * @return count
+   */
   public static long countLongerWordsNoStream(List<String> words) {
     List<String> filtered = new ArrayList<String>();
     words.forEach(w -> {
@@ -24,6 +34,11 @@ public class CountLongerWords {
     return filtered.size();
   }
 
+  /**
+   * Read file, and split the content to words
+   * @param path File path, To be read
+   * @return Words list of specified file
+   */
   public static List<String> splitTextToWords(Path path) {
     String contents = null;
     try {

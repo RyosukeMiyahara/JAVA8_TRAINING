@@ -54,7 +54,7 @@ public class CountLongerWords {
     long start;
     long end;
 
-    List<String> words = splitTextToWords(Paths.get("text/ch06/ex06_01/alice.txt"));
+    List<String> words = splitTextToWords(Paths.get("text/ch08/ex08_05/alice.txt"));
 
     System.out.println("Stream case:");
     start = System.nanoTime();

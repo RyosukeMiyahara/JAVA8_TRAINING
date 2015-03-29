@@ -4,7 +4,7 @@
 
     public class LabeledPoint {
       private String label;
-      privagte int x;
+      private int x;
       private int y;
       ...
     }

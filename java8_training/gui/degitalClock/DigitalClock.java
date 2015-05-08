@@ -22,8 +22,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -31,12 +33,17 @@ import javafx.util.Duration;
 import javafx.util.Pair;
 
 public class DigitalClock extends Application {
-  String printTime;
+  String formattedPrintTime = "00:00:00";
   Label time;
 
+  VBox root;
+  String fontType = "Times New Roman";
   int fontSize = 128;
+  String fontColor = "Black";
+  String backgroundColor = "Yellow";
+
   Scene scene;
-  Text text;
+  Text timeForFontMetrics;
 
   double sideFrame;
 
@@ -47,45 +54,49 @@ public class DigitalClock extends Application {
     // Create Menu bar
     MenuBar menuBar = createMenuBar(dialog);
 
+    // Initialize clock
     ZonedDateTime currentTime = ZonedDateTime.now();
-    printTime = DateTimeFormatter.ofPattern("HH:mm:ss").format(currentTime);
+    formattedPrintTime = DateTimeFormatter.ofPattern("HH:mm:ss").format(currentTime);
+    time = new Label(formattedPrintTime);
+    time.setFont(new Font(fontType, fontSize));
+    timeForFontMetrics = new Text(formattedPrintTime);
 
-    time = new Label(printTime);
-    time.setFont(new Font(fontSize));
-
-    text = new Text(printTime);
-
+    // For update
     Timeline timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
       public void handle(ActionEvent event) {
         ZonedDateTime currentTime = ZonedDateTime.now();
         // printTime = DateTimeFormatter.ISO_LOCAL_TIME.format(currentTime);
-        printTime = DateTimeFormatter.ofPattern("HH:mm:ss").format(currentTime);
-        time.setText(printTime);
-        text.setText(printTime);
-        time.setFont(new Font(fontSize));
-        text.setFont(new Font(fontSize));
-        stage.setWidth(text.getLayoutBounds().getWidth() + sideFrame * 2);
-
+        formattedPrintTime = DateTimeFormatter.ofPattern("HH:mm:ss").format(currentTime);
+        time.setText(formattedPrintTime);
+        timeForFontMetrics.setText(formattedPrintTime);
+        time.setFont(new Font(fontType, fontSize));
+        time.setTextFill(Color.web(fontColor));
+        timeForFontMetrics.setFont(new Font(fontType, fontSize));
+        stage.setWidth(timeForFontMetrics.getLayoutBounds().getWidth() + sideFrame * 2);
+        root.setStyle("-fx-background-color: " + backgroundColor + ";");
       }
     }));
     timer.setCycleCount(Timeline.INDEFINITE);
     timer.play();
 
-
-
-
-    VBox root = new VBox();
+    // Show
+    root = new VBox();
+    root.setStyle("-fx-background-color: " + "Yellow;");
     root.setFillWidth(true);
     root.getChildren().add(menuBar);
     root.getChildren().add(time);
-    scene = new Scene(root);
+    scene = new Scene(root, Color.web("Yellow"));
     stage.setResizable(false);
     stage.setScene(scene);
     stage.setTitle("Digital Clock 8");
     stage.show();
 
 
+    scene.setFill(Color.web("Yellow"));
+    time.setBackground(Background.EMPTY);
+    stage.setResizable(true);
 
+    // Get frame size
     sideFrame = scene.getWindow().getWidth() - scene.getWidth();
   }
 

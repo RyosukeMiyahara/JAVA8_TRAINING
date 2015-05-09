@@ -22,7 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -30,26 +29,33 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.util.Pair;
 
 public class DigitalClock extends Application {
   String formattedPrintTime = "00:00:00";
   Label time;
 
   VBox root;
+
   String fontType = "Times New Roman";
-  int fontSize = 128;
+  int    fontSize = 128;
   String fontColor = "Black";
-  String backgroundColor = "Yellow";
+  String backgroundColor = "White";
+
+  String tmpFontType = "Times New Roman";
+  int    tmpFontSize = 128;
+  String tmpFontColor = "Black";
+  String tmpBackgroundColor = "White";
 
   Scene scene;
   Text timeForFontMetrics;
 
   double sideFrame;
+  double topFrame;
 
   public void start(Stage stage) {
     // Create setting dialog
-    Dialog<Pair<String, String>> dialog = createSettingDialog();
+    // Dialog<Pair<String, String>> dialog = createSettingDialog();
+    Dialog<ButtonType> dialog = createSettingDialog();
 
     // Create Menu bar
     MenuBar menuBar = createMenuBar(dialog);
@@ -59,6 +65,7 @@ public class DigitalClock extends Application {
     formattedPrintTime = DateTimeFormatter.ofPattern("HH:mm:ss").format(currentTime);
     time = new Label(formattedPrintTime);
     time.setFont(new Font(fontType, fontSize));
+    time.setTextFill(Color.web(fontColor));
     timeForFontMetrics = new Text(formattedPrintTime);
 
     // For update
@@ -73,6 +80,7 @@ public class DigitalClock extends Application {
         time.setTextFill(Color.web(fontColor));
         timeForFontMetrics.setFont(new Font(fontType, fontSize));
         stage.setWidth(timeForFontMetrics.getLayoutBounds().getWidth() + sideFrame * 2);
+        stage.setHeight(timeForFontMetrics.getLayoutBounds().getHeight() + topFrame + menuBar.getHeight());
         root.setStyle("-fx-background-color: " + backgroundColor + ";");
       }
     }));
@@ -81,27 +89,29 @@ public class DigitalClock extends Application {
 
     // Show
     root = new VBox();
-    root.setStyle("-fx-background-color: " + "Yellow;");
+    root.setStyle("-fx-background-color: " + backgroundColor + ";");
     root.setFillWidth(true);
     root.getChildren().add(menuBar);
     root.getChildren().add(time);
-    scene = new Scene(root, Color.web("Yellow"));
+    scene = new Scene(root);
     stage.setResizable(false);
     stage.setScene(scene);
     stage.setTitle("Digital Clock 8");
     stage.show();
 
-
-    scene.setFill(Color.web("Yellow"));
-    time.setBackground(Background.EMPTY);
-    stage.setResizable(true);
-
     // Get frame size
     sideFrame = scene.getWindow().getWidth() - scene.getWidth();
+    topFrame = scene.getWindow().getHeight() - scene.getHeight();
   }
 
-  private Dialog<Pair<String, String>> createSettingDialog() {
-    Dialog<Pair<String, String>> dialog;
+  /**
+   * Create setting dialog for digital clock
+   * @return created dialog
+   */
+  // private Dialog<Pair<String, String>> createSettingDialog() {
+  private Dialog<ButtonType> createSettingDialog() {
+    // Dialog<Pair<String, String>> dialog;
+    Dialog<ButtonType> dialog;
     dialog = new Dialog<>();
 
     GridPane dialogPane = new GridPane();
@@ -111,7 +121,6 @@ public class DigitalClock extends Application {
     ObservableList<String> fontTypeOptions = FXCollections.observableArrayList(fonts);
     ComboBox<String> fontTypeComboBox = new ComboBox<String>(fontTypeOptions);
     fontTypeComboBox.setValue("Times New Roman");
-    fontTypeComboBox.setOnAction((t) -> System.out.println(fontTypeComboBox.getValue()));
     Label fontTypeLabel = new Label("Font type: ");
     dialogPane.add(fontTypeLabel, 0, 0);
     dialogPane.add(fontTypeComboBox, 1, 0);
@@ -123,7 +132,6 @@ public class DigitalClock extends Application {
         1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024);
     ComboBox<Integer> fontSizeComboBox = new ComboBox<Integer>(fontSizeOptions);
     fontSizeComboBox.setValue(128);
-    fontSizeComboBox.setOnAction((t) -> System.out.println(fontSizeComboBox.getValue()));
     Label fontSizeLabel = new Label("Font size: ");
     dialogPane.add(fontSizeLabel, 0, 1);
     dialogPane.add(fontSizeComboBox, 1, 1);
@@ -157,15 +165,45 @@ public class DigitalClock extends Application {
     // Buttons
     ButtonType buttonTypeOk = new ButtonType("OK", ButtonData.OK_DONE);
     ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-    dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
     dialog.getDialogPane().getButtonTypes().add(buttonTypeCancel);
+    dialog.getDialogPane().getButtonTypes().add(buttonTypeOk);
 
+    // Set content
     dialog.getDialogPane().setContent(dialogPane);
+
+
+
+    // Set actions
+    dialog.setOnCloseRequest((eh)-> {
+      switch (dialog.getResult().getButtonData()) {
+      case OK_DONE:
+        fontType = fontTypeComboBox.getValue();
+        fontSize = fontSizeComboBox.getValue();
+        fontColor = fontColorComboBox.getValue();
+        backgroundColor = backgroundColorComboBox.getValue();
+        break;
+      case CANCEL_CLOSE:
+        fontTypeComboBox.setValue(tmpFontType);
+        fontSizeComboBox.setValue(tmpFontSize);
+        fontColorComboBox.setValue(tmpFontColor);
+        backgroundColorComboBox.setValue(tmpBackgroundColor);
+        break;
+      default:
+        System.err.println("Unexpected case...");
+      }
+    });
+
 
     return dialog;
   }
 
-  private MenuBar createMenuBar(Dialog<Pair<String, String>> dialog) {
+  /**
+   * Create menu bar for digital clock
+   * @param dialog this dialog is shown when "Setting" on menu is clicked
+   * @return created menu bar
+   */
+  // private MenuBar createMenuBar(Dialog<Pair<String, String>> dialog) {
+  private MenuBar createMenuBar(Dialog<ButtonType> dialog) {
     MenuBar menuBar = new MenuBar();
 
     // Menu
@@ -181,7 +219,13 @@ public class DigitalClock extends Application {
     menuBar.getMenus().add(menu);
 
     // Set action
-    settingItem.setOnAction((eh)->dialog.show());
+    settingItem.setOnAction((eh) -> {
+      tmpFontType = fontType;
+      tmpFontSize = fontSize;
+      tmpFontColor = fontColor;
+      tmpBackgroundColor = backgroundColor;
+      dialog.show();
+    });
     exitItem.setOnAction((eh)->Platform.exit());
 
     return menuBar;

@@ -3,6 +3,7 @@ package degitalClock;
 import java.awt.GraphicsEnvironment;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.prefs.Preferences;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -10,8 +11,6 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.scene.Scene;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -32,60 +31,56 @@ import javafx.util.Duration;
 
 public class DigitalClock extends Application {
   String formattedPrintTime = "00:00:00";
-  Label time;
-
-  VBox root;
-
-  String fontType = "Times New Roman";
-  int    fontSize = 128;
-  String fontColor = "Black";
-  String backgroundColor = "White";
-
-  String tmpFontType = "Times New Roman";
-  int    tmpFontSize = 128;
-  String tmpFontColor = "Black";
-  String tmpBackgroundColor = "White";
 
   Scene scene;
+  VBox root;
+  Label time;
   Text timeForFontMetrics;
+
+  String fontType;
+  int    fontSize;
+  String fontColor;
+  String backgroundColor;
+
+  String tmpFontType;
+  int    tmpFontSize;
+  String tmpFontColor;
+  String tmpBackgroundColor;
 
   double sideFrame;
   double topFrame;
 
+
+  private Preferences prefs = Preferences.userNodeForPackage(this.getClass());
+
+
   public void start(Stage stage) {
+    // Load params
+    fontType = prefs.get("miyahara_font_type", "Times New Roman");
+    fontSize = prefs.getInt("miyahara_font_size", 128);
+    fontColor = prefs.get("miyahara_font_color", "Black");
+    backgroundColor = prefs.get("miyahara_bg_color", "White");
+    tmpFontType = fontType;
+    tmpFontSize = fontSize;
+    tmpFontColor = fontColor;
+    tmpBackgroundColor = backgroundColor;
+    stage.setX(prefs.getDouble("miyahara_window_x", 100.0));
+    stage.setY(prefs.getDouble("miyahara_window_y", 100.0));
+    stage.setWidth(prefs.getDouble("miyahara_window_width", 467.125));
+    stage.setHeight(prefs.getDouble("miyahara_window_height", 208.75));
+
     // Create setting dialog
-    // Dialog<Pair<String, String>> dialog = createSettingDialog();
     Dialog<ButtonType> dialog = createSettingDialog();
 
     // Create Menu bar
-    MenuBar menuBar = createMenuBar(dialog);
+    MenuBar menuBar = createMenuBar(dialog, stage);
 
     // Initialize clock
-    ZonedDateTime currentTime = ZonedDateTime.now();
-    formattedPrintTime = DateTimeFormatter.ofPattern("HH:mm:ss").format(currentTime);
+    formattedPrintTime = DateTimeFormatter.ofPattern("HH:mm:ss").format(ZonedDateTime.now());
     time = new Label(formattedPrintTime);
     time.setFont(new Font(fontType, fontSize));
     time.setTextFill(Color.web(fontColor));
     timeForFontMetrics = new Text(formattedPrintTime);
-
-    // For update
-    Timeline timer = new Timeline(new KeyFrame(Duration.millis(1000), new EventHandler<ActionEvent>() {
-      public void handle(ActionEvent event) {
-        ZonedDateTime currentTime = ZonedDateTime.now();
-        // printTime = DateTimeFormatter.ISO_LOCAL_TIME.format(currentTime);
-        formattedPrintTime = DateTimeFormatter.ofPattern("HH:mm:ss").format(currentTime);
-        time.setText(formattedPrintTime);
-        timeForFontMetrics.setText(formattedPrintTime);
-        time.setFont(new Font(fontType, fontSize));
-        time.setTextFill(Color.web(fontColor));
-        timeForFontMetrics.setFont(new Font(fontType, fontSize));
-        stage.setWidth(timeForFontMetrics.getLayoutBounds().getWidth() + sideFrame * 2);
-        stage.setHeight(timeForFontMetrics.getLayoutBounds().getHeight() + topFrame + menuBar.getHeight());
-        root.setStyle("-fx-background-color: " + backgroundColor + ";");
-      }
-    }));
-    timer.setCycleCount(Timeline.INDEFINITE);
-    timer.play();
 
     // Show
     root = new VBox();
@@ -99,20 +94,55 @@ public class DigitalClock extends Application {
     stage.setTitle("Digital Clock 8");
     stage.show();
 
+    // To handle closing window
+    stage.setOnCloseRequest((eh) -> {
+      saveParams(stage);
+    });
+
     // Get frame size
     sideFrame = scene.getWindow().getWidth() - scene.getWidth();
     topFrame = scene.getWindow().getHeight() - scene.getHeight();
+
+    // For update
+    Timeline timer = new Timeline(new KeyFrame(Duration.millis(1000), (eh) -> {
+      formattedPrintTime = DateTimeFormatter.ofPattern("HH:mm:ss").format(ZonedDateTime.now());
+      time.setText(formattedPrintTime);
+      timeForFontMetrics.setText(formattedPrintTime);
+      time.setFont(new Font(fontType, fontSize));
+      time.setTextFill(Color.web(fontColor));
+      timeForFontMetrics.setFont(new Font(fontType, fontSize));
+      stage.setWidth(timeForFontMetrics.getLayoutBounds().getWidth() + sideFrame * 2);
+      stage.setHeight(timeForFontMetrics.getLayoutBounds().getHeight() + topFrame + menuBar.getHeight());
+      root.setStyle("-fx-background-color: " + backgroundColor + ";");
+    }));
+    timer.setCycleCount(Timeline.INDEFINITE);
+    timer.play();
+  }
+
+  /**
+   * Save setting and window params
+   * @param stage get window params from stage
+   */
+  private void saveParams(Stage stage) {
+    prefs.putDouble("miyahara_window_x", stage.getX());
+    prefs.putDouble("miyahara_window_y", stage.getY());
+    prefs.putDouble("miyahara_window_width", stage.getWidth());
+    prefs.putDouble("miyahara_window_height", stage.getHeight());
+
+    prefs.put("miyahara_font_type", fontType);
+    prefs.putInt("miyahara_font_size", fontSize);
+    prefs.put("miyahara_font_color", fontColor);
+    prefs.put("miyahara_bg_color", backgroundColor);
   }
 
   /**
    * Create setting dialog for digital clock
    * @return created dialog
    */
-  // private Dialog<Pair<String, String>> createSettingDialog() {
   private Dialog<ButtonType> createSettingDialog() {
-    // Dialog<Pair<String, String>> dialog;
     Dialog<ButtonType> dialog;
     dialog = new Dialog<>();
+    dialog.setTitle("Setting");
 
     GridPane dialogPane = new GridPane();
 
@@ -120,7 +150,7 @@ public class DigitalClock extends Application {
     String fonts[] = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
     ObservableList<String> fontTypeOptions = FXCollections.observableArrayList(fonts);
     ComboBox<String> fontTypeComboBox = new ComboBox<String>(fontTypeOptions);
-    fontTypeComboBox.setValue("Times New Roman");
+    fontTypeComboBox.setValue(fontType);
     Label fontTypeLabel = new Label("Font type: ");
     dialogPane.add(fontTypeLabel, 0, 0);
     dialogPane.add(fontTypeComboBox, 1, 0);
@@ -131,7 +161,7 @@ public class DigitalClock extends Application {
     ObservableList<Integer> fontSizeOptions = FXCollections.observableArrayList(
         1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024);
     ComboBox<Integer> fontSizeComboBox = new ComboBox<Integer>(fontSizeOptions);
-    fontSizeComboBox.setValue(128);
+    fontSizeComboBox.setValue(fontSize);
     Label fontSizeLabel = new Label("Font size: ");
     dialogPane.add(fontSizeLabel, 0, 1);
     dialogPane.add(fontSizeComboBox, 1, 1);
@@ -145,7 +175,7 @@ public class DigitalClock extends Application {
     // Font color
     ComboBox<String> fontColorComboBox = new ComboBox<String>(colorOptions);
     fontColorComboBox.setCellFactory((list) -> {return new ColorListCell();});
-    fontColorComboBox.setValue("Black");
+    fontColorComboBox.setValue(fontColor);
     Label fontColorLabel = new Label("Font color: ");
     dialogPane.add(fontColorLabel, 0, 2);
     dialogPane.add(fontColorComboBox, 1, 2);
@@ -155,7 +185,7 @@ public class DigitalClock extends Application {
     // Background color
     ComboBox<String> backgroundColorComboBox = new ComboBox<String>(colorOptions);
     backgroundColorComboBox.setCellFactory((list)->{return new ColorListCell();});
-    backgroundColorComboBox.setValue("White");
+    backgroundColorComboBox.setValue(backgroundColor);
     Label backgroundColorLabel = new Label("Background color: ");
     dialogPane.add(backgroundColorLabel, 0, 3);
     dialogPane.add(backgroundColorComboBox, 1, 3);
@@ -202,8 +232,7 @@ public class DigitalClock extends Application {
    * @param dialog this dialog is shown when "Setting" on menu is clicked
    * @return created menu bar
    */
-  // private MenuBar createMenuBar(Dialog<Pair<String, String>> dialog) {
-  private MenuBar createMenuBar(Dialog<ButtonType> dialog) {
+  private MenuBar createMenuBar(Dialog<ButtonType> dialog, Stage stage) {
     MenuBar menuBar = new MenuBar();
 
     // Menu
@@ -226,7 +255,10 @@ public class DigitalClock extends Application {
       tmpBackgroundColor = backgroundColor;
       dialog.show();
     });
-    exitItem.setOnAction((eh)->Platform.exit());
+    exitItem.setOnAction((eh)-> {
+      saveParams(stage);
+      Platform.exit();
+    });
 
     return menuBar;
 

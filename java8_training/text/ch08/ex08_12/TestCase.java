@@ -5,10 +5,5 @@ import java.lang.annotation.Repeatable;
 @Repeatable(TestCases.class)
 @interface TestCase {
   int params();
-  long expected();
+  int expected();
 }
-
-@interface TestCases {
-  TestCase[] value();
-}
-

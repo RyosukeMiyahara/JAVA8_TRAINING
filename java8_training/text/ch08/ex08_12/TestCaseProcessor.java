@@ -11,8 +11,7 @@ import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
 
-// @SupportedAnnotationTypes({ "TestCase", "TestCases" })
-@SupportedAnnotationTypes({"*"})
+@SupportedAnnotationTypes({ "ch08.ex08_12.TestCase", "ch08.ex08_12.TestCases" })
 @SupportedSourceVersion(SourceVersion.RELEASE_8)
 public class TestCaseProcessor extends AbstractProcessor
 {

@@ -1,4 +1,4 @@
-package degitalClock;
+package digitalClock;
 
 import javafx.scene.control.ListCell;
 import javafx.scene.paint.Color;

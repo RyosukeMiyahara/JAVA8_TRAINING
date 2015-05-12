@@ -1,4 +1,4 @@
-package degitalClock;
+package digitalClock;
 
 import java.awt.GraphicsEnvironment;
 import java.time.ZonedDateTime;
